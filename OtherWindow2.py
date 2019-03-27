@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QApplication, QDialog
 import time
 from datetime import date
 
+
 class Ui_Dialog1(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
@@ -287,25 +288,22 @@ class Ui_Dialog1(object):
         self.labelf_2.setText(_translate("Dialog", "10.         Jubilacion esperada"))
 
         self.simular.clicked.connect(self.getJubilacion)
-
     def getJubilacion(self):
+
         s = self.sexo.currentText()
-        ano = self.dateEdit_2.date().year()
-        mes = self.dateEdit_2.date().month()
-        # anoactual = self.dateEdit_3.date().year()
-        m = date.today()
-        anoactual = m.year
-        # mesactual = self.dateEdit_3.date().month()
-        mesactual = m.month
-        rm = int(self.sueldos.displayText())  # sueldo en pesos
-        aa = int(self.sueldouf_2.displayText())
+        ano = self.fechanacimiento.date().year()
+        mes = self.fechanacimiento.date().month()
+        anoactual = self.fechaconsulta.date().year()
+        mesactual = self.fechaconsulta.date().month()
+        rm = int(self.sueldos.displayText()) # sueldo en pesos
+        aa = int(self.saldocartola.displayText()) # saldo cartola
         je = int(self.sueldouf_5.displayText())
         if mes <= mesactual :
             e = anoactual - ano
         else:
             e = anoactual - ano - 1  # e = edad
 
-        if s == 'Hombre':   # Calcula Años restantes para Jubilar según sexo
+        if s == 'Hombre':        #  Calcula Años restantes para Jubilar según sexo
             ar = 65 - e           # ar =  Años para jubilar
             av = float(85.4 - 65)
         else:
@@ -319,25 +317,29 @@ class Ui_Dialog1(object):
         apva = int(self.sueldoapv.displayText())
         apv = int(self.apvmensual.displayText())
 
-        # calculo APV
-        # ahorro apv * rentabilidad
+
+
+        #calculo APV
+        #ahorro apv * rentabilidad
         aapv = ((apv*12*ar)+apva)*2.4
         print(int(aapv))
-        caapv = (aapv * (1-0.0042))
-        # print(caapv)
+        caapv = (aapv *(1 - 0.0042 ))
+        #print(caapv)
         papv = ((caapv/av)/12.00)
-        # print(papv)
+        #print(papv)
         tapv = p + papv
         print('Pension total con APV', int(tapv))
 
         rest = je-p
-        apvj = (((((rest*12*av)/2.4)*1.005)/12)/39)
-        # print(apvj)
-        output = 'Para tener una jubilacion esperada de: ', je, ', debes ahorrar mensualmente, ', apvj,' pesos.'
-        print(output)
-        output = str(output)
+        apvj = (((((rest*12*av)/ 2.4)*1.005)/12)/39)
+        #print(apvj)
+        print('Para tener una jubilacion esperada de: ', je, ', debes ahorrar mensualmente, ', apvj,' pesos.')
 
-        self.finalpension.setText(p)
+        o = str(int(apvj))
+
+        self.label_3.setText(o)  # Imprime resultado en la Interfaz
+
+
 
 
 if __name__ == "__main__":
