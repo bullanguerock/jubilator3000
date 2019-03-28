@@ -190,7 +190,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "RS Simular jubilación"))
         self.boxfondos.setItemText(0, _translate("Dialog", "A"))
         self.boxfondos.setItemText(1, _translate("Dialog", "B"))
         self.boxfondos.setItemText(2, _translate("Dialog", "C"))
@@ -219,6 +219,9 @@ class Ui_Dialog(object):
         self.label_3.setText(_translate("Dialog", "Usted, recibirá mensualmente :"))
         self.dateEdit_3.setDisplayFormat(_translate("Dialog", "MM-yyyy"))
         self.label_9.setText(_translate("Dialog", "($)"))
+        self.sueldouf.setText('0')
+        self.sueldos.setText('0')
+        
 
         self.simular.clicked.connect(self.getJubilacion)
 
@@ -232,8 +235,102 @@ class Ui_Dialog(object):
         anoactual = m.year
         # mesactual = self.dateEdit_3.date().month()
         mesactual = m.month
-        rm = int(self.sueldos.displayText())  # sueldo en pesos
         aa = int(self.sueldouf_2.displayText())
+        tabla = [[1.44,2.06,2.35,2.12,1.74,2.4],[1.44,2.15,2.29,1.94,1.59,1.9],[1.27,2.47,2.82,2.54,2.17,2.55],[0.77,2.22,2.64,2.3,2.18,2.29],[1.16,1.53,1.65,1.62,1.38,1.97],[1.45,1.83,1.94,1.57,1.22,1.63]]
+
+        afp = self.boxafp.currentText()
+        fondo = self.boxfondos.currentText()
+        uf = int(self.sueldouf.displayText())
+        
+        
+        
+        if uf != 0:
+            rm = uf*27208
+        else:
+            rm = int(self.sueldos.displayText())            
+        
+
+        if afp == 'AFP compital':
+            com = tabla[0][0]
+            if fondo == 'A':
+                rent = tabla[0][1]
+            elif fondo == 'B':
+                rent = tabla[0][2]
+            elif fondo == 'C':
+                rent = tabla[0][3]
+            elif fondo == 'D':
+                rent = tabla[0][4]
+            else:
+                rent = tabla[0][5]
+        
+        elif afp == 'AFP Cuprum':
+            com = tabla[1][0]
+            if fondo == 'A':
+                rent = tabla[1][1]
+            elif fondo == 'B':
+                rent = tabla[1][2]
+            elif fondo == 'C':
+                rent = tabla[1][3]
+            elif fondo == 'D':
+                rent = tabla[1][4]
+            else:
+                rent = tabla[1][5]
+    
+        elif afp == 'AFP Habitat':
+            com = tabla[2][0]
+            if fondo == 'A':
+                rent = tabla[2][1]
+            elif fondo == 'B':
+                rent = tabla[2][2]
+            elif fondo == 'C':
+                rent = tabla[2][3]
+            elif fondo == 'D':
+                rent = tabla[2][4]
+            else:
+                rent = tabla[2][5]
+        
+        elif afp == 'AFP Modelo':
+    
+            com = tabla[3][0]
+            if fondo == 'A':
+                rent = tabla[3][1]
+            elif fondo == 'B':
+                rent = tabla[3][2]
+            elif fondo == 'C':
+                rent = tabla[3][3]
+            elif fondo == 'D':
+                rent = tabla[3][4]
+            else:
+                rent = tabla[3][5]
+        
+        elif afp == 'AFP Planvital' :
+            com = tabla[4][0]
+            if fondo == 'A':
+                rent = tabla[4][1]
+            elif fondo == 'B':
+                rent = tabla[4][2]
+            elif fondo == 'C':
+                rent = tabla[4][3]
+            elif fondo == 'D':
+                rent = tabla[4][4]
+            else:
+                rent = tabla[4][5]
+        else:
+            com = tabla[5][0]
+            if fondo == 'A':
+                rent = tabla[5][1]
+            elif fondo == 'B':
+                rent = tabla[5][2]
+            elif fondo == 'C':
+                rent = tabla[5][3]
+            elif fondo == 'D':
+                rent = tabla[5][4]
+            else:
+                rent = tabla[5][5]
+
+      
+        
+        
 
         if mes <= mesactual:
             e = anoactual - ano
@@ -249,12 +346,13 @@ class Ui_Dialog(object):
             av = float(90.5 - 60)
         # ahorro total
         at = (((rm*12*ar)*0.1)+aa)
-        atr = float(at * 2.4)
+        atr = float(at * rent)
         p = int((atr/av)/12)
         print(p)
         p = str(p)
 
-        self.finalpension.setText(p)  # Imprime resultado en la Interfaz
+        self.finalpension.setText(p)  # Imprime resultado en la Interfaz'''
+        
 
 
 
