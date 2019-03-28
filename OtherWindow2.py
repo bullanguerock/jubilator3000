@@ -1,7 +1,6 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QApplication, QDialog
-import time
 from datetime import date
 
 class Ui_Dialog1(object):
@@ -303,8 +302,11 @@ class Ui_Dialog1(object):
         s = self.sexo.currentText()
         ano = self.fechanacimiento.date().year()
         mes = self.fechanacimiento.date().month()
-        anoactual = 2019
-        mesactual = 3
+        hoy = date.today()
+        m = hoy.month
+        y = hoy.year
+        anoactual = int(y)
+        mesactual = int(m)
         rm = int(self.sueldos.displayText()) # sueldo en pesos
         aa = int(self.saldocartola.displayText()) # saldo cartola
         je = int(self.sueldouf_5.displayText())
@@ -342,7 +344,7 @@ class Ui_Dialog1(object):
         jj=str(int(tapv))
 
         rest = je-p
-        apvj = (((((rest*12*av)/ 2.4)*1.005)/12)/39)
+        apvj = (((((rest*12*av)/ 2.4)*1.005)/12)/ar)
         #print(apvj)
         print('Para tener una jubilacion esperada de: ', je, ', debes ahorrar mensualmente, ', apvj,' pesos.')
 
@@ -359,7 +361,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
+    ui = Ui_Dialog1()
     ui.setupUi(Dialog)
     Dialog.show()
     sys.exit(app.exec_())
